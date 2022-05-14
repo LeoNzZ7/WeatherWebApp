@@ -4,9 +4,10 @@ import { CityCords, WeatherInfo } from "../types/types";
 
 type Props = {
     handleWeatherInfo: (info: WeatherInfo) => void;
+    handleLocationInfo: (name: string) => void;
 }
 
-export const SearchArea = ({ handleWeatherInfo }: Props) => {
+export const SearchArea = ({ handleWeatherInfo, handleLocationInfo }: Props) => {
     const api = API;
 
     const [location, setLocation] = useState('');
@@ -19,12 +20,13 @@ export const SearchArea = ({ handleWeatherInfo }: Props) => {
             const getInfoNow: WeatherInfo = await api.getInfoNow(cords.coord.lat, cords.coord.lon);
             setLoading(false);
             handleWeatherInfo(getInfoNow);
+            handleLocationInfo(`${cords.name} | ${cords.sys.country}`);
         }
-    }
+    };
 
     const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
         setLocation(e.target.value);
-    }
+    };
 
     return(
         <div className="h-full w-full flex flex-col justify-center items-center">
