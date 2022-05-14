@@ -1,18 +1,25 @@
 import { API } from "./API"
 import { ChangeEvent, useState } from "react";
-import { CityCords } from "../types/types";
+import { CityCords, WeatherInfo } from "../types/types";
 
-export const SearchArea = () => {
+type Props = {
+    handleWeatherInfo: (info: WeatherInfo) => void;
+}
+
+export const SearchArea = ({ handleWeatherInfo }: Props) => {
     const api = API;
 
     const [location, setLocation] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleSearch = async () => {
-        setLoading(true);
-        const cords: CityCords | any = await api.getCityCords(location);
-        const getInfoNow = await api.getInfoNow(cords.coord.lat, cords.coord.lon);
-        setLoading(false);
+        if(location) {
+            setLoading(true);
+            const cords: CityCords = await api.getCityCords(location);
+            const getInfoNow: WeatherInfo = await api.getInfoNow(cords.coord.lat, cords.coord.lon);
+            setLoading(false);
+            handleWeatherInfo(getInfoNow);
+        }
     }
 
     const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
