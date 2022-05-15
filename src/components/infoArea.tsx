@@ -1,4 +1,6 @@
-import { WeatherInfo } from "../types/types"
+import { ArrowFatRight, Moon, Sun, SunHorizon, Wind } from "phosphor-react";
+import { useEffect, useState } from "react";
+import { WeatherInfo } from "../types/types";
 
 type Props = {
     info?: WeatherInfo
@@ -9,9 +11,50 @@ export const InfoArea = ({ info, location }: Props) => {
     const formatTemp = (n: string) => {
         const temp = parseInt(n)
         return temp.toFixed(0) + "°C"
-    }
+    };
 
-    console.log(info?.current.weather[0].icon)
+    const formatWindSpeed = (n: string) => {
+        const windSpeed = parseInt(n);
+        return windSpeed.toFixed(0) + " km/h"
+    };
+
+    const getDay = () => {
+        let now = new Date();
+        let currentDay = now.getDate();
+
+        return currentDay
+    };
+
+    const getMonth = () => {
+        let now = new Date();
+        let currentMonth = now.getMonth();
+
+        return currentMonth
+    };   
+
+    const [windDirection, setWindDirection] = useState('');
+
+    const HandleWindDirection = () => {
+        if(info?.current.wind_deg as number >= 0 && info?.current.wind_deg as number <= 45) {
+            setWindDirection('LESTE');
+        } else if (info?.current.wind_deg as number >= 45 && info?.current.wind_deg as number <= 90) {
+            setWindDirection('SUDESTE');
+        } else if (info?.current.wind_deg as number >= 90 && info?.current.wind_deg as number <= 135) {
+            setWindDirection('SUL');
+        } else if (info?.current.wind_deg as number >= 135 && info?.current.wind_deg as number <= 180) {
+            setWindDirection('SUDOESTE');
+        } else if (info?.current.wind_deg as number >= 135 && info?.current.wind_deg as number <= 180) {
+            setWindDirection('OESTE');
+        } else if (info?.current.wind_deg as number >= 225 && info?.current.wind_deg as number <= 270) {
+            setWindDirection('NOROESTE');
+        } else if (info?.current.wind_deg as number >= 270 && info?.current.wind_deg as number <= 305) {
+            setWindDirection('NORTE');
+        } else if (info?.current.wind_deg as number >= 305 && info?.current.wind_deg as number <= 360) {
+            setWindDirection('NORDESTE');
+        }
+    };
+
+    useEffect(HandleWindDirection, [info])
 
     return(
         <>
@@ -22,23 +65,58 @@ export const InfoArea = ({ info, location }: Props) => {
                     {location}
                 </h1>
             </div>
-            <div className="h-[300px] mx-5 p-5 flex flex-wrap justify-between text-white rounded-xl bg-slate-800">
-                <div className="bg-slate-900 flex p-2 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[30%] h-3/6 justify-evenly items-center">
-                    <h1>Temperatura</h1>
-                    <h1 className="font-bold text-4xl">{formatTemp(info.current.temp)}</h1>
+            <div className="h-[300px] mx-5 p-5 flex justify-between text-white rounded-xl bg-slate-800">
+                <div className="w-full h-full flex flex-col">
+                    <div className="flex justify-around" >
+                        <div className="bg-slate-900 flex p-2 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[42%] h-full justify-evenly items-center">
+                            <h1>Temperatura</h1>
+                            <h1 className="font-bold text-4xl">{formatTemp(info.current.temp)}</h1>
+                        </div>
+                            <div className="bg-slate-900 flex p-2 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[42%] h-full justify-around items-center">
+                            <img className="w-20 h-20" src={`http://openweathermap.org/img/wn/${info.current.weather[0].icon}@2x.png`} alt="iMG"/>
+                            <p className="text-center text-lg">{info.current.weather[0].description}</p>
+                        </div>
+                    </div >
+                    <div className="w-full h-[250px] p-4 rounded-xl" >
+                        <div className="w-[100%] h-[120px] p-4 flex justify-around shadow-md shadow-slate-900 rounded-xl bg-slate-900" >
+                            <div className="w-[30%] bg-slate-800 rounded-xl flex flex-col items-center justify-evenly h-full text-center" >
+                                <SunHorizon size={30} />
+                                <h1 className="font-bold text-2xl">{formatTemp(info.daily[0].temp.day)}</h1>
+                            </div>
+                            <div className="w-[30%] bg-slate-800 rounded-xl h-full text-center flex flex-col items-center justify-evenly">
+                                <Sun size={30} />
+                                <h1 className="font-bold text-2xl">{formatTemp(info.daily[0].temp.eve)}</h1>
+                            </div>
+                            <div className="w-[30%] bg-slate-800 rounded-xl h-full text-center flex flex-col items-center justify-evenly">
+                                <Moon size={30} />
+                                <h1 className="font-bold text-2xl">{formatTemp(info.daily[0].temp.night)}</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="bg-slate-900 flex p-2 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[30%] h-3/6 justify-around items-center">
-                    <img className="w-20 h-20" src={`http://openweathermap.org/img/wn/${info.current.weather[0].icon}@2x.png`} alt="iMG"/>
-                    <p>{info.current.weather[0].description}</p>
+                <div className="bg-slate-900 flex p-2 mr-4 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[35%] h-6/6 justify-around items-center">
+                    <Wind size={75} />
+                    <h1>{windDirection}</h1>
+                    <div className="text-center">
+                        <span className="text-xl text-center" >
+                            Velocidade do vento
+                        </span>
+                        <div className="text-center text-xl " >
+                            {formatWindSpeed(info.current.wind_speed)}
+                        </div>
+                    </div>
                 </div>
-                <div className="bg-slate-900 flex p-2 flex-col shadow-md font-bold text-2xl shadow-slate-900 rounded-xl w-[35%] h-6/6 justify-around items-center">
-                   <div className="w-[125px] h-[125px] border-2 rounded-full border-white" >
-                        
-                   </div>
-                </div> 
             </div>
             <div className="h-[120px] mx-5 rounded-xl mt-[20px] flex bg-slate-800">
-                
+                <div className="p-1 flex w-full justify-evenly items-center">
+                    {info.daily.map((item, index) => (
+                        <div key={index} className="w-[11%] p-2 text-white h-full rounded-xl bg-slate-900">
+                            <h1 className="text-center text-base font-bold">{getDay() + index}/{getMonth() + 1}</h1>
+                            <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}/>
+                            <div className="text-center">{formatTemp(item.temp.day)}</div>     
+                        </div> 
+                    ))}
+                </div>
             </div>
         </div>
         }
