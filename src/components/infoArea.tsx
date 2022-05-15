@@ -1,37 +1,14 @@
 import { ArrowFatRight, Moon, Sun, SunHorizon, Wind } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { WeatherInfo } from "../types/types";
+import { formatTemp, getDay, getMonth, formatWindSpeed } from '../helpers/helpers.functions'
 
 type Props = {
-    info?: WeatherInfo
-    location: string
+    info?: WeatherInfo;
+    location: string;
 }
 
 export const InfoArea = ({ info, location }: Props) => {
-    const formatTemp = (n: string) => {
-        const temp = parseInt(n)
-        return temp.toFixed(0) + "°C"
-    };
-
-    const formatWindSpeed = (n: string) => {
-        const windSpeed = parseInt(n);
-        return windSpeed.toFixed(0) + " km/h"
-    };
-
-    const getDay = () => {
-        let now = new Date();
-        let currentDay = now.getDate();
-
-        return currentDay
-    };
-
-    const getMonth = () => {
-        let now = new Date();
-        let currentMonth = now.getMonth();
-
-        return currentMonth
-    };   
-
     const [windDirection, setWindDirection] = useState('');
 
     const HandleWindDirection = () => {

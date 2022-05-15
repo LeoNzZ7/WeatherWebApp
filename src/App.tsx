@@ -6,12 +6,15 @@ import { WeatherInfo } from "./types/types";
 const App = () => {
   const [weatherInfo, setWeatherInfo] = useState<WeatherInfo>()
   const [location, setLocation] = useState('');
-  console.log(weatherInfo?.daily, weatherInfo?.current)
+
+  const handleReset = () => {
+    setWeatherInfo(undefined);
+  }
 
   return(
     <div className="h-screen flex bg-slate-800">
       <div className="w-2/5 p-6 h-screen bg-slate-900 shadow-2xl shadow-neutral-900">
-        <SearchArea handleLocationInfo={setLocation} handleWeatherInfo={setWeatherInfo} />
+        <SearchArea handleReset={handleReset} handleLocationInfo={setLocation} handleWeatherInfo={setWeatherInfo} />
         <div className="text-white text-center">desenvolvido com 💜 por <a href="https://www.linkedin.com/in/leonardo-nunes-martinha-68052522b/" target='_blank'>Leonardo Nunes Martinha</a></div>
       </div>
       <div className="w-full flex justify-center items-center">
