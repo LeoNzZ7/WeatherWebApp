@@ -2,7 +2,6 @@ import { ArrowUUpLeft, Moon, Sun, SunHorizon } from "phosphor-react";
 import { formatTemp, formatWindSpeed } from "../helpers/helpers.functions";
 import { WeatherInfo } from "../types/types";
 import { useState, useEffect } from 'react';
-import { Wrapper, Status } from "@googlemaps/react-wrapper";
  
 type Props = {
     open: boolean;
@@ -14,10 +13,6 @@ type Props = {
 export const ModalInfo = ({ open, info, index, setClose }: Props) => {
     const [windDirection, setWindDirection] = useState('');
     
-    const render = (status: Status) => {
-        return <h1>{status}</h1>;
-    };
-
     const HandleWindDirection = () => {
         if(info?.current.wind_deg as number >= 0 && info?.current.wind_deg as number <= 45) {
             setWindDirection('LESTE');
