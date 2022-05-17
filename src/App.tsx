@@ -4,12 +4,14 @@ import { useState } from "react";
 import { WeatherInfo } from "./types/types";
 
 const App = () => {
-  const [weatherInfo, setWeatherInfo] = useState<WeatherInfo>()
+  const [weatherInfo, setWeatherInfo] = useState<WeatherInfo>();
   const [location, setLocation] = useState('');
 
   const handleReset = () => {
     setWeatherInfo(undefined);
-  }
+  };
+
+  console.log(weatherInfo)
 
   return(
     <div className="h-screen flex bg-slate-800">

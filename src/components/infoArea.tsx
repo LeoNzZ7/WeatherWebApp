@@ -1,7 +1,8 @@
-import { ArrowFatRight, Moon, Sun, SunHorizon, Wind } from "phosphor-react";
+import { Moon, Sun, SunHorizon, Wind } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { WeatherInfo } from "../types/types";
 import { formatTemp, getDay, getMonth, formatWindSpeed } from '../helpers/helpers.functions'
+import { ModalInfo } from "./modalInfo";
 
 type Props = {
     info?: WeatherInfo;
@@ -10,8 +11,10 @@ type Props = {
 
 export const InfoArea = ({ info, location }: Props) => {
     const [windDirection, setWindDirection] = useState('');
+    const [index, setIndex] = useState(0);
+    const [open, setOpen] = useState(false);
 
-    const HandleWindDirection = () => {
+     const HandleWindDirection = () => {
         if(info?.current.wind_deg as number >= 0 && info?.current.wind_deg as number <= 45) {
             setWindDirection('LESTE');
         } else if (info?.current.wind_deg as number >= 45 && info?.current.wind_deg as number <= 90) {
@@ -34,7 +37,8 @@ export const InfoArea = ({ info, location }: Props) => {
     useEffect(HandleWindDirection, [info])
 
     return(
-        <>
+        <>  
+        <ModalInfo index={index} info={info} open={open} setClose={setOpen} />
         {info &&
         <div className="w-4/5 h-[550px] rounded-xl shadow-md shadow-neutral-900 bg-slate-900">
             <div className="h-[60px] mx-5 mb-[20px] mt-[15px] flex rounded-xl items-center justify-center bg-slate-800">
@@ -84,14 +88,16 @@ export const InfoArea = ({ info, location }: Props) => {
                     </div>
                 </div>
             </div>
-            <div className="h-[120px] mx-5 rounded-xl mt-[20px] flex bg-slate-800">
-                <div className="p-1 flex w-full justify-evenly items-center">
+            <div className="h-[120px] p-2 mx-5 rounded-xl mt-[20px] flex bg-slate-800">
+                <div className=" flex w-full justify-evenly items-center">
                     {info.daily.map((item, index) => (
-                        <div key={index} className="w-[11%] p-2 text-white h-full rounded-xl bg-slate-900">
-                            <h1 className="text-center text-base font-bold">{getDay() + index}/{getMonth() + 1}</h1>
-                            <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}/>
-                            <div className="text-center">{formatTemp(item.temp.day)}</div>     
-                        </div> 
+                        <div key={index} onClick={e => setOpen(true)} className="w-[11%] cursor-pointer p-2 text-white h-full rounded-xl bg-slate-900">
+                            <div onClick={e => setIndex(index)} >
+                                <h1 className="text-center text-base font-bold">{getDay() + index}/{getMonth() + 1}</h1>    
+                                <img src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}/>
+                                <div className="text-center text-sm font-bold">{formatTemp(item.temp.day)}</div>
+                            </div>
+                        </div>
                     ))}
                 </div>
             </div>

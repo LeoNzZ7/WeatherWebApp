@@ -13,5 +13,5 @@ export const API = {
     getInfoNow: async (lat: string, lon: string) => {
         let response = await axiosInstance.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=1dbf677402a57361a93e11b176b0db44&units=metric&lang=pt_br`);
         return response.data;
-    }
+    },
 } 

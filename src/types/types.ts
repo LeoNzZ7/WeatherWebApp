@@ -25,7 +25,10 @@ export type WeatherInfo = {
     };
     daily: [
         {
-            humidity: string
+            wind_deg: number;
+            humidity: string;
+            pressure: string;
+            wind_speed: string;
             temp: {
                 day: string;
                 eve: string;
@@ -39,7 +42,7 @@ export type WeatherInfo = {
                 icon: string;
                 main: string;
                 }
-            ]
+            ];
         }
     ];
     timezone: string
