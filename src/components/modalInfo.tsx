@@ -21,19 +21,19 @@ export const ModalInfo = ({ open, info, index, setClose }: Props) => {
     const HandleWindDirection = () => {
         if(info?.current.wind_deg as number >= 0 && info?.current.wind_deg as number <= 45) {
             setWindDirection('LESTE');
-        } else if (info?.daily[index].wind_deg as number >= 45 && info?.current.wind_deg as number <= 90) {
+        } else if (info?.daily[index].wind_deg as number >= 45 && info?.daily[index].wind_deg as number <= 90) {
             setWindDirection('SUDESTE');
-        } else if (info?.daily[index].wind_deg as number >= 90 && info?.current.wind_deg as number <= 135) {
+        } else if (info?.daily[index].wind_deg as number >= 90 && info?.daily[index].wind_deg as number <= 135) {
             setWindDirection('SUL');
-        } else if (info?.daily[index].wind_deg as number >= 135 && info?.current.wind_deg as number <= 180) {
+        } else if (info?.daily[index].wind_deg as number >= 135 && info?.daily[index].wind_deg as number <= 180) {
             setWindDirection('SUDOESTE');
-        } else if (info?.daily[index].wind_deg as number >= 135 && info?.current.wind_deg as number <= 180) {
+        } else if (info?.daily[index].wind_deg as number >= 135 && info?.daily[index].wind_deg as number <= 180) {
             setWindDirection('OESTE');
-        } else if (info?.daily[index].wind_deg as number >= 225 && info?.current.wind_deg as number <= 270) {
+        } else if (info?.daily[index].wind_deg as number >= 225 && info?.daily[index].wind_deg as number <= 270) {
             setWindDirection('NOROESTE');
-        } else if (info?.daily[index].wind_deg as number >= 270 && info?.current.wind_deg as number <= 305) {
+        } else if (info?.daily[index].wind_deg as number >= 270 && info?.daily[index].wind_deg as number <= 305) {
             setWindDirection('NORTE');
-        } else if (info?.daily[index].wind_deg as number >= 305 && info?.current.wind_deg as number <= 360) {
+        } else if (info?.daily[index].wind_deg as number >= 305 && info?.daily[index].wind_deg as number <= 360) {
             setWindDirection('NORDESTE');
         }
     }; 
