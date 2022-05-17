@@ -2,7 +2,7 @@
 # 📃 Sobre o projeto
 - WeatherWebApp é um projeto que permite buscar as informações meteorológicas de mais de 200 mil cidades ao redor do mundo.
 # 💻 Layout do projeto
-![WeatherWebAppV1.gif](https://github.com/LeoNzZ7/WeatherWebApp/blob/master/WeatherWebAppV1.gif)
+![WeatherWebAppV2.gif](https://github.com/LeoNzZ7/WeatherWebApp/blob/master/WeatherWebAppV2.gif)
 # 🚀 Tecnologias utilizadas
 ### ✔ Typescript
 ### ✔ ReactJs
